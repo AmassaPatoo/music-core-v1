@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#12131b">
-  <meta name="description" content="Music Core — biblioteca de música local com playlists, favoritos e player independente.">
+  <meta name="description" content="Music Core — player de música com Spotify, Audius e Internet Archive, playlists e favoritos.">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./assets/icon-192.png" type="image/png">
   <link rel="stylesheet" href="./styles.css">
@@ -24,7 +24,7 @@
     <div class="side-divider"></div>
     <div class="playlist-header"><span>SUAS PLAYLISTS</span><button class="tiny-btn" id="new-playlist" type="button" title="Criar playlist" aria-label="Criar playlist">＋</button></div>
     <nav class="playlist-nav" id="playlist-nav" aria-label="Suas playlists"></nav>
-    <div class="sidebar-foot">PLAYERS INDEPENDENTES<br>SEM CONTA • SEM ANÚNCIOS<br><span>Arquivos locais e autorizados</span></div>
+    <div class="sidebar-foot">PLAYERS INDEPENDENTES<br>SEM CONTA • SEM ANÚNCIOS<br><span>Spotify · Audius · Internet Archive</span></div>
   </aside>
 
   <main class="content" id="content">
@@ -32,7 +32,7 @@
       <div class="page-breadcrumb">SEU ESPAÇO DE MÚSICA</div>
       <div class="top-actions">
         <label class="search-field" for="search-input"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Buscar músicas, artistas..." autocomplete="off"><kbd>Ctrl K</kbd></label>
-        <button class="outline-btn" id="import-top" type="button">＋ Importar músicas</button>
+        <button class="outline-btn" data-nav="explore" type="button">◎ Explorar</button>
       </div>
     </header>
     <section id="view" aria-live="polite"></section>
@@ -48,7 +48,7 @@
     </div>
     <div class="queue-head"><h3>A seguir</h3><button class="text-btn" id="open-queue" type="button">Ver fila →</button></div>
     <div class="mini-queue" id="mini-queue"></div>
-    <div class="help-card"><strong>♪ Sua biblioteca é sua</strong><p>As músicas importadas ficam neste navegador, usando armazenamento local. Não são enviadas para um servidor.</p></div>
+    <div class="help-card"><strong>♪ O que você ouve é só seu</strong><p>Biblioteca, playlists, favoritos e login ficam apenas neste navegador. Nada é enviado para um servidor do Music Core e ninguém vê o que você escuta.</p></div>
   </aside>
 </div>
 
@@ -72,12 +72,10 @@
     <button class="player-icon" id="queue-toggle" type="button" aria-label="Abrir fila" title="Fila">≡</button>
     <span class="volume-icon">◖))</span>
     <input id="volume" type="range" min="0" max="100" value="78" aria-label="Volume">
-    <span class="desktop-tag">LOCAL PLAYER</span>
+    <span class="desktop-tag">ONLINE PLAYER</span>
   </div>
 </footer>
 
-<input id="file-input" type="file" accept="audio/*,.mp3,.m4a,.ogg,.wav,.flac,.aac,.opus" multiple hidden>
-<div class="drop-overlay" id="drop-overlay">Solte as músicas para adicionar à biblioteca</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <dialog id="playlist-dialog" class="dialog"><form method="dialog" id="playlist-form"><h2>Criar playlist</h2><p>Escolha um nome para sua seleção.</p><input id="playlist-name" maxlength="60" placeholder="Ex.: Minhas favoritas de hoje" required><div class="dialog-actions"><button value="cancel" type="button" id="cancel-playlist" class="outline-btn">Cancelar</button><button value="create" type="submit" class="primary-btn">Criar playlist</button></div></form></dialog>
 <dialog id="add-dialog" class="dialog"><div><h2>Adicionar à playlist</h2><p id="add-track-caption"></p><div id="add-playlist-options" class="add-playlist-options"></div><div class="dialog-actions"><button type="button" class="outline-btn" id="cancel-add">Fechar</button></div></div></dialog>

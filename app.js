@@ -1,5 +1,5 @@
-/* Music Core — player independente de arquivos locais/autorizados.
-   Importações JSON usam apenas metadados e NÃO acessam streams do Spotify. */
+/* Music Core — player de música online: Audius, Internet Archive e a conta Spotify de cada usuário.
+   Sem servidor: biblioteca, playlists e login ficam apenas no navegador de cada pessoa. */
 (() => {
   'use strict';
   const DB_NAME = 'music-core-v1', DB_VERSION = 1;
@@ -39,16 +39,6 @@
       };
       req.onsuccess=()=>resolve(req.result); req.onerror=()=>reject(req.error);
     });
-    const existing = await transact('tracks','readonly', s=>s.count());
-    if(existing===0){
-      try {
-        const response=await fetch('./assets/demo-original.wav');
-        if(response.ok){
-          const blob=await response.blob();
-          await transact('tracks','readwrite',s=>s.put({id:'demo-original',source:'local',title:'Teste de áudio — composição original',artist:'Music Core',album:'Demonstração',durationMs:7000,coverUrl:null,liked:false,audioBlob:blob,fileName:'demo-original.wav',fileSize:blob.size,fileLastModified:0,addedAt:Date.now()}));
-        }
-      } catch {/* Apps abertas sem servidor podem importar arquivos normalmente. */}
-    }
     await refresh();
   }
   async function refresh() {
@@ -72,10 +62,10 @@
     return `<div class="${cls}" style="background:linear-gradient(140deg,hsl(${hue} 40% 42%),hsl(${(hue+65)%360} 35% 28%))">♫</div>`;
   }
   function heading(text,subtitle=''){return `<h1 class="page-title">${esc(text)}</h1>${subtitle?`<p class="muted micro">${esc(subtitle)}</p>`:''}`;}
-  function buttons(){return `<div class="hero-actions"><button class="primary-btn" data-nav="explore" type="button">◎ Explorar músicas online</button><button class="outline-btn" data-action="import-audio" type="button">＋ Importar áudio</button><button class="outline-btn" data-action="import-json" type="button">Importar metadados JSON</button></div>`;}
+  function buttons(){return `<div class="hero-actions"><button class="primary-btn" data-nav="explore" type="button">◎ Explorar músicas online</button></div>`;}
   function empty(title,msg){return `<div class="empty"><div class="empty-icon">♫</div><h3>${esc(title)}</h3><p>${esc(msg)}</p>${buttons()}</div>`;}
   function trackTable(tracks, options={}) {
-    if(!tracks.length) return empty(options.emptyTitle||'Nenhuma música encontrada',options.emptyText||'Importe arquivos de áudio autorizados ou um JSON de metadados.');
+    if(!tracks.length) return empty(options.emptyTitle||'Nenhuma música encontrada',options.emptyText||'Busque músicas em Explorar e salve as que gostar.');
     return `<div class="track-list ${options.remote?'remote':''}"><div class="track-table-head"><span>#</span><span>MÚSICA</span><span class="album-col">ÁLBUM</span><span class="duration-col">DURAÇÃO</span><span></span></div>${tracks.map((t,i)=>`<div class="track-row ${t.id===state.current?'active':''}" data-track="${esc(t.id)}"><span class="idx">${i+1}</span><div class="track-main">${cover(t)}<div class="track-meta"><span class="track-title" title="${esc(t.title)}">${esc(t.title)}</span><span class="track-artist" title="${esc(t.artist)}">${esc(t.artist||'Artista desconhecido')}${canPlay(t)?'':' · Apenas catálogo'}${(t.streamUrl||t.spotifyUri)&&!options.remote?` · ${esc(SOURCES[t.source]||'Online')}`:''}</span></div></div><span class="track-size album-col" title="${esc(t.album||'')}">${esc(t.album||'—')}</span><span class="duration-col muted micro">${fmt(t.durationMs)}</span><div class="table-actions">${options.remote?`<button class="table-btn ${isSaved(t.id)?'on':''}" data-action="save" data-id="${esc(t.id)}" title="${isSaved(t.id)?'Já está na biblioteca':'Salvar na biblioteca'}">${isSaved(t.id)?'✓':'⤓'}</button>`:''}<button class="table-btn ${t.liked?'on':''}" data-action="like" data-id="${esc(t.id)}" title="Favoritar">${t.liked?'♥':'♡'}</button><button class="table-btn more-btn" data-action="add" data-id="${esc(t.id)}" title="Adicionar à playlist">＋</button><button class="play-row" data-action="play" data-id="${esc(t.id)}" title="Reproduzir">${t.id===state.current && !isPaused()?'Ⅱ':'▶'}</button></div></div>`).join('')}</div>`;
   }
   function filter(arr) {if(!state.query.trim()) return arr;const q=norm(state.query);return arr.filter(t=>norm(`${t.title} ${t.artist} ${t.album}`).includes(q));}
@@ -125,7 +115,7 @@
   function itemList(items){return `<div class="track-list">${items.map((it,i)=>`<div class="track-row"><span class="idx">${i+1}</span><div class="track-main">${cover(it)}<div class="track-meta"><span class="track-title" title="${esc(it.title)}">${esc(it.title)}</span><span class="track-artist">${esc(it.artist||'Autor desconhecido')}</span></div></div><span class="track-size album-col">${esc(it.info||'—')}</span><span class="duration-col"></span><div class="table-actions"><button class="chip" data-action="explore-open" data-id="${esc(it.id)}" type="button">Abrir ▸</button></div></div>`).join('')}</div>`;}
   function spotifySetupView(){
     if(!spClientId())return `<div class="setup-card"><h3>Conectar sua conta do Spotify</h3><ol><li>Abra <a href="https://developer.spotify.com/dashboard" target="_blank" rel="noopener">developer.spotify.com/dashboard</a> e entre com a sua conta do Spotify.</li><li>Clique em <b>Create app</b>. Nome e descrição podem ser quaisquer (ex.: Music Core).</li><li>Em <b>Redirect URIs</b>, cole exatamente <code>${esc(spRedirect())}</code> e clique em <b>Add</b>.</li><li>Marque <b>Web API</b> e <b>Web Playback SDK</b>, aceite os termos e salve.</li><li>Abra o app criado, copie o <b>Client ID</b> e cole abaixo.</li></ol><form id="sp-client-form" class="explore-form"><input id="sp-client-input" placeholder="Cole aqui o Client ID" autocomplete="off" required pattern="[A-Za-z0-9]{16,64}"><button class="primary-btn" type="submit">Salvar</button></form><p class="info-note">O Client ID não é senha e fica salvo só neste navegador. Nunca cole aqui o Client Secret. Tocar músicas exige Spotify Premium e funciona no navegador do computador (Chrome, Edge ou Firefox).</p></div>`;
-    return `<div class="setup-card"><h3>Entre com a sua conta do Spotify</h3><p>Você será levado à página oficial do Spotify para autorizar o Music Core e depois voltará para cá. Sua senha nunca passa por este app.</p><div class="hero-actions"><button class="primary-btn" data-action="sp-login" type="button">Entrar com Spotify</button><button class="outline-btn" data-action="sp-reset" type="button">Trocar Client ID</button></div></div>`;
+    return `<div class="setup-card"><h3>Entre com a sua conta do Spotify</h3><p>Você será levado à página oficial do Spotify para autorizar o Music Core e depois voltará para cá. Sua senha nunca passa por este app.</p><div class="hero-actions"><button class="primary-btn" data-action="sp-login" type="button">Entrar com Spotify</button>${store.get('mc-spotify-client-id')?'<button class="outline-btn" data-action="sp-reset" type="button">Trocar Client ID</button>':''}</div></div>`;
   }
   function exploreView(){
     const ex=state.explore, spSetup=ex.source==='spotify'&&!spLogged();
@@ -146,7 +136,9 @@
   const store={get(k){try{return localStorage.getItem(k);}catch{return null;}},set(k,v){try{if(v==null)localStorage.removeItem(k);else localStorage.setItem(k,v);}catch{}}};
   const sp={player:null,ready:null,state:null,stamp:0,refreshing:null};
   const spRedirect=()=>location.origin+location.pathname.replace(/index.html$/,'');
-  const spClientId=()=>store.get('mc-spotify-client-id')||'';
+  /* Client ID público do app no Spotify Developer Dashboard (não é segredo). Vazio = cada pessoa cola o próprio. */
+  const SPOTIFY_CLIENT_ID='';
+  const spClientId=()=>store.get('mc-spotify-client-id')||SPOTIFY_CLIENT_ID;
   function spTokens(){try{return JSON.parse(store.get('mc-spotify-token')||'null');}catch{return null;}}
   const spLogged=()=>Boolean(spClientId()&&spTokens()?.refresh);
   const b64url=buf=>btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
@@ -185,7 +177,10 @@
     const r=await fetch(`https://api.spotify.com/v1${path}`,{...opts,headers:{Authorization:`Bearer ${await spToken()}`,...(opts.body?{'Content-Type':'application/json'}:{})}});
     if(r.status===204||r.status===202)return null;
     const data=await r.json().catch(()=>null);
-    if(!r.ok){const e=Error(data?.error?.message||`HTTP ${r.status}`);e.status=r.status;throw e;}
+    if(!r.ok){
+      const msg=data?.error?.message||`HTTP ${r.status}`, blocked=r.status===403&&/regist|allowlist|not.*(allowed|enabled)/i.test(msg);
+      const e=Error(blocked?'sua conta do Spotify ainda não foi liberada neste app. Peça ao administrador para adicionar o seu e-mail do Spotify.':msg);e.status=r.status;e.blocked=blocked;throw e;
+    }
     return data;
   }
   const spTrack=t=>remember({id:t.uri,source:'spotify',title:t.name,artist:(t.artists||[]).map(a=>a.name).join(', '),album:t.album?.name||'',durationMs:t.duration_ms||0,coverUrl:(t.album?.images||[]).find(i=>i.width&&i.width<=320)?.url||t.album?.images?.[0]?.url||null,liked:false,spotifyUri:t.uri,sourceInfo:{pageUrl:t.external_urls?.spotify||null}});
@@ -250,17 +245,17 @@
   function render() {
     $$('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.nav===state.view));
     $('#playlist-nav').innerHTML=state.playlists.map(p=>`<button class="playlist-item ${state.view==='playlist'&&state.selectedPlaylist===p.id?'active':''}" data-playlist="${esc(p.id)}" type="button"><span>▤</span><span>${esc(p.name)}</span></button>`).join('');
-    const count=state.tracks.length, playable=state.tracks.filter(canPlay).length, favorites=state.tracks.filter(t=>t.liked).length;
+    const count=state.tracks.length, favorites=state.tracks.filter(t=>t.liked).length;
     let html='';
     if(state.view==='home'){
-      html=`<section class="hero"><div><div class="eyebrow">SUA BIBLIOTECA INDEPENDENTE</div><h1>A música começa<br>no seu espaço.</h1><p>Organize faixas, favoritos e playlists. Reproduza seus arquivos locais e visualize metadados importados.</p>${buttons()}</div></section><div class="stats"><div class="stat"><strong>${count}</strong><span>faixas cadastradas</span></div><div class="stat"><strong>${playable}</strong><span>arquivos reproduzíveis</span></div><div class="stat"><strong>${favorites}</strong><span>favoritas</span></div></div><div class="section-heading"><h2>Adicionadas recentemente</h2><span class="muted micro">${count} cadastradas</span></div>${trackTable(filter(state.tracks.slice(0,60)))}`;
+      html=`<section class="hero"><div><div class="eyebrow">SEU ESPAÇO DE MÚSICA</div><h1>A música começa<br>no seu espaço.</h1><p>Ouça Spotify, Audius e Internet Archive num só lugar. Organize favoritos e playlists — tudo fica só no seu navegador.</p>${buttons()}</div></section><div class="stats"><div class="stat"><strong>${count}</strong><span>músicas salvas</span></div><div class="stat"><strong>${state.playlists.length}</strong><span>playlists</span></div><div class="stat"><strong>${favorites}</strong><span>favoritas</span></div></div><div class="section-heading"><h2>Adicionadas recentemente</h2><span class="muted micro">${count} salvas</span></div>${trackTable(filter(state.tracks.slice(0,60)))}`;
     } else if(state.view==='library'){
-      html=heading('Sua biblioteca',`${count} faixas, ${playable} com áudio local`)+`<div class="sub-actions">${buttons()}</div>${trackTable(filter(state.tracks))}`;
+      html=heading('Sua biblioteca',`${count} músicas salvas`)+`<div class="sub-actions">${buttons()}</div>${trackTable(filter(state.tracks))}`;
     } else if(state.view==='liked'){
       const t=filter(state.tracks.filter(t=>t.liked));html=heading('Músicas favoritas',`${favorites} faixas marcadas`)+trackTable(t,{emptyText:'Use o coração ♡ para salvar suas favoritas.'});
     } else if(state.view==='playlist'){
       const p=state.playlists.find(p=>p.id===state.selectedPlaylist);
-      html=p?`<div class="playlist-top"><div class="playlist-art">♫</div><div><div class="eyebrow">SUA PLAYLIST</div><h1>${esc(p.name)}</h1><p>${p.trackIds.length} músicas · edição local</p></div></div><div class="sub-actions"><button class="outline-btn" data-action="delete-playlist" data-id="${esc(p.id)}">Excluir playlist</button><button class="outline-btn" data-action="import-audio">Adicionar músicas à biblioteca</button></div>${trackTable(filter(playlistItems()),{emptyText:'Adicione músicas usando o botão ＋ ao lado de uma faixa.'})}`:empty('Playlist não encontrada','Selecione outra playlist.');
+      html=p?`<div class="playlist-top"><div class="playlist-art">♫</div><div><div class="eyebrow">SUA PLAYLIST</div><h1>${esc(p.name)}</h1><p>${p.trackIds.length} músicas · edição local</p></div></div><div class="sub-actions"><button class="outline-btn" data-action="delete-playlist" data-id="${esc(p.id)}">Excluir playlist</button><button class="outline-btn" data-nav="explore" type="button">Buscar músicas</button></div>${trackTable(filter(playlistItems()),{emptyText:'Adicione músicas usando o botão ＋ ao lado de uma faixa.'})}`:empty('Playlist não encontrada','Selecione outra playlist.');
     } else if(state.view==='explore'){
       html=exploreView();
     } else if(state.view==='queue'){
@@ -275,7 +270,7 @@
     $('#now-title').textContent=t?.title||'Escolha uma música';
     $('#now-artist').textContent=t?.artist||'Sua sessão começa aqui';
     $('#player-title').textContent=t?.title||'Nada tocando';
-    $('#player-artist').textContent=t?.artist||(state.tracks.length?'Selecione uma faixa':'Importe suas músicas para começar');
+    $('#player-artist').textContent=t?.artist||(state.tracks.length?'Selecione uma faixa':'Busque músicas em Explorar para começar');
     $('#now-cover').innerHTML=t?cover(t,'now-cover-inner'):'<span>♫</span>';
     $('#mini-cover').innerHTML=t?'♫':'♫';
     $('#like-current').textContent=t?.liked?'♥':'♡';
@@ -292,7 +287,7 @@
   }
   async function play(id, fromList=null) {
     const t=lookup(id); if(!t)return;
-    if(!canPlay(t)){notice('Esta faixa contém apenas metadados. Para ouvir, importe um arquivo de áudio autorizado.');return;}
+    if(!canPlay(t)){notice('Esta faixa não tem áudio disponível.');return;}
     if(t.spotifyUri&&!spLogged()){notice('Para tocar músicas do Spotify, entre na sua conta em Explorar → Spotify.');return;}
     sp.player?.activateElement?.();
     if(state.current===id){await togglePlayback();render();return;}
@@ -303,7 +298,7 @@
     state.current=id;
     if(t.spotifyUri){
       audio.pause();state.engine='spotify';sp.state=null;render();
-      try{await spPlay(t.spotifyUri);}catch(err){if(err.status===403)notice('Tocar músicas do Spotify aqui exige conta Premium.');else if(err.status)notice(`Spotify: ${err.message}`);}
+      try{await spPlay(t.spotifyUri);}catch(err){if(err.status===403&&!err.blocked)notice('Tocar músicas do Spotify aqui exige conta Premium.');else if(err.status)notice(`Spotify: ${err.message}`);}
     } else {
       if(state.engine==='spotify'){sp.player?.pause();state.engine='audio';}
       if(t.audioBlob){state.objectUrl=URL.createObjectURL(t.audioBlob);audio.src=state.objectUrl;}else audio.src=t.streamUrl||t.demoUrl;
@@ -335,51 +330,7 @@
         return;
       }
     }
-    pausePlayback();notice('Não há mais arquivos de áudio reproduzíveis na fila.');
-  }
-  async function importFiles(files){
-    const candidates=[...files].filter(f=>f.type.startsWith('audio/')||/\.(mp3|m4a|ogg|wav|flac|aac|opus)$/i.test(f.name));
-    if(!candidates.length){notice('Selecione arquivos de áudio.');return;}
-    let imported=0;
-    for(const file of candidates){
-      const existing=state.tracks.find(t=>t.source==='local'&&t.fileName===file.name&&t.fileSize===file.size&&t.fileLastModified===file.lastModified);
-      if(existing) continue;
-      const label=file.name.replace(/\.[^.]+$/,'');
-      const parts=label.split(/\s+-\s+/);
-      const artist=parts.length>1?parts.shift():'Arquivo local';
-      const title=parts.length?parts.join(' - '):label;
-      await transact('tracks','readwrite',s=>s.put({id:guid(),source:'local',title,artist,album:'Arquivos locais',durationMs:0,coverUrl:null,liked:false,audioBlob:file,fileName:file.name,fileSize:file.size,fileLastModified:file.lastModified,addedAt:Date.now()}));
-      imported++;
-    }
-    await refresh(); notice(`${imported} arquivo(s) de áudio importado(s)${candidates.length-imported?' (duplicados ignorados)':''}.`);
-  }
-  function normalizePlaylist(json){
-    const p=json?.data?.playlistV2;
-    if(!p?.content || !Array.isArray(p.content.items)) throw Error('Não encontrei data.playlistV2.content.items.');
-    const snapshot={name:String(p.name||'Playlist importada'),total:Number(p.content.totalCount||0),offset:Number(p.content.pagingInfo?.offset||0),limit:Number(p.content.pagingInfo?.limit||p.content.items.length),revision:p.revisionId||null};
-    snapshot.items=p.content.items.map((item,index)=>{
-      const t=item?.itemV2?.data; if(!t?.uri || !t?.name)return null;
-      const image=t.albumOfTrack?.coverArt?.sources||[];
-      const best=image.find(c=>c.height===300)||image.find(c=>c.height===640)||image[0];
-      return {sourceUri:t.uri,itemUid:item.uid||null,position:snapshot.offset+index,title:t.name,artist:(t.artists?.items||[]).map(a=>a.profile?.name).filter(Boolean).join(', '),album:t.albumOfTrack?.name||'',durationMs:t.trackDuration?.totalMilliseconds||0,coverUrl:best?.url||null,explicit:t.contentRating?.label==='EXPLICIT',bpm:t.playlistAudioAttributes?.bpm??null,musicalKey:t.playlistAudioAttributes?.key?.key||null,musicalMode:t.playlistAudioAttributes?.key?.mode||null,playableInSource:t.playability?.playable===true,addedAt:item.addedAt?.isoString||null};
-    }).filter(Boolean);
-    return snapshot;
-  }
-  async function importJson(file){
-    let snap;
-    try{snap=normalizePlaylist(JSON.parse(await file.text()));}
-    catch(err){notice(`JSON inválido para playlist: ${err.message}`);return;}
-    let count=0;
-    for(const t of snap.items){
-      const id=`meta:${t.sourceUri}`;
-      if(state.tracks.find(x=>x.id===id))continue;
-      await transact('tracks','readwrite',s=>s.put({id,source:'metadata',title:t.title,artist:t.artist,album:t.album,durationMs:t.durationMs,coverUrl:t.coverUrl,liked:false,addedAt:Date.now()-count,sourceInfo:{sourceUri:t.sourceUri,explicit:t.explicit,bpm:t.bpm,musicalKey:t.musicalKey,musicalMode:t.musicalMode}}));count++;
-    }
-    const id=guid();
-    const collection={id,name:`${snap.name} (importado)`,createdAt:Date.now(),trackIds:snap.items.map(t=>`meta:${t.sourceUri}`),sourceEntries:snap.items.map(t=>({uid:t.itemUid,sourceUri:t.sourceUri,position:t.position,addedAt:t.addedAt})),importedPage:{offset:snap.offset,limit:snap.limit,total:snap.total,revision:snap.revision}};
-    await transact('playlists','readwrite',s=>s.put(collection));
-    state.selectedPlaylist=id;state.view='playlist';await refresh();
-    notice(`Importadas ${snap.items.length} das ${snap.total} faixas da coleção. ${count} novos metadados, sem áudios.`);
+    pausePlayback();notice('Não há mais músicas reproduzíveis na fila.');
   }
   function openAdd(id){
     const t=lookup(id);if(!t)return;
@@ -393,23 +344,17 @@
   async function removePlaylist(id){if(!confirm('Excluir esta playlist? As músicas permanecerão na biblioteca.'))return;await transact('playlists','readwrite',s=>s.delete(id));state.view='library';state.selectedPlaylist=null;await refresh();}
   function currentList(){if(state.view==='explore')return exploreTracks(); if(state.view==='liked')return filter(state.tracks.filter(t=>t.liked)); if(state.view==='playlist')return filter(playlistItems()); if(state.view==='queue')return state.queue.map(lookup).filter(Boolean);return filter(state.tracks);}
   function setupUI(){
-    $('#import-top').onclick=()=>$('#file-input').click();
     $('#new-playlist').onclick=()=>{$('#playlist-name').value='';$('#playlist-dialog').showModal();};
     $('#cancel-playlist').onclick=()=>$('#playlist-dialog').close();
     $('#cancel-add').onclick=()=>$('#add-dialog').close();
     $('#playlist-form').onsubmit=async e=>{e.preventDefault();const name=$('#playlist-name').value.trim();if(!name)return;await createPlaylist(name);$('#playlist-dialog').close();};
-    $('#file-input').onchange=async e=>{await importFiles(e.target.files);e.target.value='';};
-    const jf=document.createElement('input');jf.type='file';jf.accept='.json,.txt,application/json,text/plain';jf.hidden=true;document.body.append(jf);
-    jf.onchange=async e=>{if(e.target.files[0])await importJson(e.target.files[0]);e.target.value='';};
     document.addEventListener('click',async e=>{
       const nav=e.target.closest('[data-nav]');if(nav){state.view=nav.dataset.nav;render();if(state.view==='explore'&&!state.explore.loaded)runExplore();return;}
       const pnav=e.target.closest('[data-playlist]');if(pnav){state.view='playlist';state.selectedPlaylist=pnav.dataset.playlist;render();return;}
       const addTo=e.target.closest('[data-add-to]');if(addTo){const id=addTo.dataset.trackId;await ensureSaved(id);const p=state.playlists.find(p=>p.id===addTo.dataset.addTo);if(p){ if(!p.trackIds.includes(id))p.trackIds.push(id);await savePlaylist(p);notice('Música adicionada à playlist.');$('#add-dialog').close();}return;}
       const btn=e.target.closest('[data-action]');if(!btn)return;
       const {action,id}=btn.dataset;
-      if(action==='import-audio')$('#file-input').click();
-      else if(action==='import-json')jf.click();
-      else if(action==='like')await toggleLiked(id);
+      if(action==='like')await toggleLiked(id);
       else if(action==='add')openAdd(id);
       else if(action==='play'){
         const t=lookup(id);if(t){const list=currentList();await play(id,list.map(x=>x.id));}
@@ -448,10 +393,6 @@
       for(const [act,fn] of Object.entries({'play':()=>{if(isPaused())togglePlayback();},'pause':()=>pausePlayback(),'nexttrack':()=>playNext(1),'previoustrack':()=>playNext(-1),'seekto':d=>{if(Number.isFinite(d.seekTime))seekTo(d.seekTime);}}))try{navigator.mediaSession.setActionHandler(act,fn);}catch{}
     }
     document.addEventListener('keydown',e=>{const active=document.activeElement;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('#search-input').focus();}else if(e.code==='Space'&&!e.repeat&&!['INPUT','TEXTAREA','BUTTON'].includes(active?.tagName)&&!active?.isContentEditable){e.preventDefault();$('#play-btn').click();}});
-    let drag=0;document.addEventListener('dragenter',e=>{if(e.dataTransfer?.types?.includes('Files')){drag++;$('#drop-overlay').classList.add('show');}});
-    document.addEventListener('dragleave',()=>{drag=Math.max(0,drag-1);if(!drag)$('#drop-overlay').classList.remove('show');});
-    document.addEventListener('dragover',e=>e.preventDefault());
-    document.addEventListener('drop',async e=>{e.preventDefault();drag=0;$('#drop-overlay').classList.remove('show');await importFiles(e.dataTransfer.files);});
   }
   async function init(){
     setupUI();
