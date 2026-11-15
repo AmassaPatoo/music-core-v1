@@ -1,9 +1,10 @@
 # Music Core — V1 (biblioteca independente)
 
-Player web/PWA para arquivos de áudio próprios ou devidamente autorizados. Não se conecta ao streaming do Spotify, não copia arquivos do catálogo e não contorna DRM.
+Player web/PWA para arquivos de áudio próprios ou devidamente autorizados, com busca integrada em plataformas de música aberta. Não se conecta ao streaming do Spotify, não copia arquivos do catálogo e não contorna DRM.
 
 ## Funcionalidades
 
+- **Explorar músicas online**: busca e reprodução de músicas completas e gratuitas do **Audius** (artistas independentes) e do **Internet Archive** (domínio público, Creative Commons, shows ao vivo autorizados), usando as APIs públicas dessas plataformas. As faixas podem ser salvas na biblioteca, adicionadas a playlists e favoritadas; o áudio é transmitido pela internet direto da plataforma de origem.
 - Importar MP3, WAV, OGG, AAC, FLAC etc. (quando o navegador suporta), incluindo arrastar e soltar.
 - Guardar arquivos em IndexedDB no próprio navegador; reprodução com `HTMLAudioElement`.
 - Biblioteca, busca, músicas favoritas, playlists locais, fila, avanço, retorno, modo aleatório e repetição.
