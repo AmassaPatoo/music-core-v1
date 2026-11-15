@@ -1,0 +1,480 @@
+{
+  "sourceType": "playlist-metadata-snapshot",
+  "playlist": {
+    "name": "Músicas curtidas",
+    "totalCount": 86,
+    "limit": 25,
+    "offset": 0,
+    "revisionId": "X2ZSKAAAAAAAAAAAAAAAAAAAAAAAAAND"
+  },
+  "audioUrlAvailable": false,
+  "tracks": [
+    {
+      "position": 0,
+      "itemUid": "bbf8f90505f6c7f2ace0",
+      "trackUri": "spotify:track:0mTwgs9gQy7ncaWA04g5o6",
+      "title": "Sina de Ofélia",
+      "artists": [
+        "Heitor Santos"
+      ],
+      "album": "Sina de Ofélia",
+      "durationMs": 150256,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02d340483572453d0259e9d86a",
+      "explicit": false,
+      "bpm": 143.76300048828125,
+      "key": "C#",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-11-15T13:29:46Z"
+    },
+    {
+      "position": 1,
+      "itemUid": "0060ac221f17dd0f8ac1",
+      "trackUri": "spotify:track:5xwFmh10Ay1QJBkOhKGXpl",
+      "title": "Cavalona",
+      "artists": [
+        "Dj jão o brabo"
+      ],
+      "album": "Cavalona",
+      "durationMs": 203062,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e0217de03a87d2e647e5c7a6a96",
+      "explicit": true,
+      "bpm": 130.003,
+      "key": "B",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-11-13T18:42:24Z"
+    },
+    {
+      "position": 2,
+      "itemUid": "625928e34ecb900a3396",
+      "trackUri": "spotify:track:52nb1PnO46yKrEfuotz5MV",
+      "title": "Eu Te Amo Meu Amor / Faixa Rosa",
+      "artists": [
+        "DJ Ws da Igrejinha",
+        "Mac Júlia",
+        "MC Xenon"
+      ],
+      "album": "Caça Fantasma, Vol. 1",
+      "durationMs": 114045,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e026c36712851ceac15e39b91d6",
+      "explicit": true,
+      "bpm": 130.88221740722656,
+      "key": "D#",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-11-11T10:51:09Z"
+    },
+    {
+      "position": 3,
+      "itemUid": "56c66cb3b9498a382db7",
+      "trackUri": "spotify:track:4qdd65hOzPezAl8UKsjcqS",
+      "title": "ACONTECEU DE NOVO - ELETROFUNK",
+      "artists": [
+        "Jhow",
+        "Boschin",
+        "DJ Kayo Original"
+      ],
+      "album": "ACONTECEU DE NOVO",
+      "durationMs": 94572,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e0292532933fb3450f0aae9ef78",
+      "explicit": true,
+      "bpm": 130.00051879882812,
+      "key": "A#",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-11-10T19:50:09Z"
+    },
+    {
+      "position": 4,
+      "itemUid": "eca5987dc271b8bcbf76",
+      "trackUri": "spotify:track:1iNqjqnFkMADVUmD7wEuk4",
+      "title": "aindatechamo.mp3",
+      "artists": [
+        "Bruna Foss"
+      ],
+      "album": "ESTRANGEIRA",
+      "durationMs": 68289,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02c6f28c6cd9ec1a247b95a6e4",
+      "explicit": false,
+      "bpm": 135.49815368652344,
+      "key": "G#",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-11-07T17:45:07Z"
+    },
+    {
+      "position": 5,
+      "itemUid": "01a5b11896cb28a92ec2",
+      "trackUri": "spotify:track:57pVQRE5YLJGqKgIxk8mlQ",
+      "title": "Mega Funk Heads Will Roll",
+      "artists": [
+        "Theuzzo"
+      ],
+      "album": "Mega Funk Heads Will Roll",
+      "durationMs": 225235,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e0298b3e3d8b0be1b4f8c2c9990",
+      "explicit": true,
+      "bpm": 128.00140380859375,
+      "key": "G#",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-11-05T15:13:09Z"
+    },
+    {
+      "position": 6,
+      "itemUid": "3416cc1ed25ebc4741c5",
+      "trackUri": "spotify:track:2dMu4zIm8iMMM8aHnVTk6U",
+      "title": "Ela é Digital Influencer",
+      "artists": [
+        "DJ DERBHEN",
+        "Mc KF",
+        "Game Records"
+      ],
+      "album": "Ela é Digital Influencer",
+      "durationMs": 131226,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e0237abe9ed231fab21ebae1e7d",
+      "explicit": true,
+      "bpm": 130.00599670410156,
+      "key": "D#",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-11-05T12:48:20Z"
+    },
+    {
+      "position": 7,
+      "itemUid": "91ffc4e34c01d024ddd9",
+      "trackUri": "spotify:track:3EPfoQZDnNxfaXbVaGMc8L",
+      "title": "Girassol",
+      "artists": [
+        "Becca Diau"
+      ],
+      "album": "Sanju da Becca",
+      "durationMs": 215123,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02a64a38f553fe656aac97b820",
+      "explicit": false,
+      "bpm": 141.9997100830078,
+      "key": "A#",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": false,
+      "addedAt": "2026-11-04T10:54:28Z"
+    },
+    {
+      "position": 8,
+      "itemUid": "ba5c09613eca02c9d41c",
+      "trackUri": "spotify:track:6RK3IsiUW6YaSMEodbO4tk",
+      "title": "Solitude - Felsmann + Tiley Reinterpretation",
+      "artists": [
+        "M83",
+        "Felsmann + Tiley"
+      ],
+      "album": "Solitude (Felsmann + Tiley Reinterpretation)",
+      "durationMs": 222354,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02fe2c5d2fa20c15dbb06a606b",
+      "explicit": false,
+      "bpm": 122.002,
+      "key": "C",
+      "mode": "MODE_MAJOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-11-02T13:02:06Z"
+    },
+    {
+      "position": 9,
+      "itemUid": "22f5f36012e9ea6e7c4a",
+      "trackUri": "spotify:track:7pEVxbyZKV5rzdVyBiJfxD",
+      "title": "Diz Que É Mentira",
+      "artists": [
+        "Tícia Rebecca"
+      ],
+      "album": "Entre Versos Capítulo 1",
+      "durationMs": 143607,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02d49e1de17c0c0d1e4f19c989",
+      "explicit": false,
+      "bpm": 140.01852416992188,
+      "key": "C",
+      "mode": "MODE_MAJOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-10-30T12:00:02Z"
+    },
+    {
+      "position": 10,
+      "itemUid": "79ec384de3c70cfb6d0f",
+      "trackUri": "spotify:track:2iYDBSUtTJgQbhPuzi2SXv",
+      "title": "Eu Só Queria",
+      "artists": [
+        "Tícia Rebecca"
+      ],
+      "album": "Eu Só Queria",
+      "durationMs": 128658,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e020fa644d82da7e669dd035bc7",
+      "explicit": false,
+      "bpm": 148.02088928222656,
+      "key": "G#",
+      "mode": "MODE_MAJOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-10-27T21:30:32Z"
+    },
+    {
+      "position": 11,
+      "itemUid": "51341d759b22d27e797e",
+      "trackUri": "spotify:track:2fKd1zb9dUIMLGFksVCh11",
+      "title": "O Zé o Zé - DJ Bruno Beat Remix",
+      "artists": [
+        "DJ Bruno Fernando",
+        "DJ Bruno Beat"
+      ],
+      "album": "O Zé o Zé (DJ Bruno Beat Remix)",
+      "durationMs": 160493,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02b609ec81772496f6da894341",
+      "explicit": false,
+      "bpm": 129.831,
+      "key": "E",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-10-01T00:54:39Z"
+    },
+    {
+      "position": 12,
+      "itemUid": "ed1a233617d054602cd2",
+      "trackUri": "spotify:track:5crhCXtSJ8OkirbbTRsNNJ",
+      "title": "Chamber of Reflection",
+      "artists": [
+        "Your Anxiety Buddy"
+      ],
+      "album": "Chamber of Reflection",
+      "durationMs": 168125,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02aa3e45d1e0ba9cfdb4b1f026",
+      "explicit": false,
+      "bpm": 59.9963,
+      "key": "E",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-09-24T14:44:35Z"
+    },
+    {
+      "position": 13,
+      "itemUid": "5c3d67c43bb75b7022d1",
+      "trackUri": "spotify:track:37hxrOc5I1faTMBwDI6FhT",
+      "title": "Eletrofunk Caipira",
+      "artists": [
+        "JIRAYAUAI",
+        "Mc Toy",
+        "MC Tigrão",
+        "Douth!",
+        "SAM SAM"
+      ],
+      "album": "Eletrofunk Caipira",
+      "durationMs": 154679,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02bc1928f12650c8766ec63b16",
+      "explicit": true,
+      "bpm": 130.004,
+      "key": "C",
+      "mode": "MODE_MAJOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-09-16T21:28:13Z"
+    },
+    {
+      "position": 14,
+      "itemUid": "879c631bc2967b6f6633",
+      "trackUri": "spotify:track:43GgAdqmGJdJkbQ7Kx9AsF",
+      "title": "Cruzeiro Da Revoada",
+      "artists": [
+        "Hungria",
+        "MC Ryan SP"
+      ],
+      "album": "Universo Particular",
+      "durationMs": 222603,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e0229a02020db91a80c6d024711",
+      "explicit": true,
+      "bpm": 123.002,
+      "key": "F#",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-09-15T23:58:43Z"
+    },
+    {
+      "position": 15,
+      "itemUid": "109ec829ea4e89456243",
+      "trackUri": "spotify:track:7BOW2uXBJHtgVQfc9yn9dl",
+      "title": "MTG - ELASTIC HEART",
+      "artists": [
+        "Lucas Hits"
+      ],
+      "album": "MTG - ELASTIC HEART",
+      "durationMs": 80009,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02ea839df2720be3bb3213dc43",
+      "explicit": false,
+      "bpm": 129.9991455078125,
+      "key": "B",
+      "mode": "MODE_MAJOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-09-10T16:13:34Z"
+    },
+    {
+      "position": 16,
+      "itemUid": "4b4d875b2b556568c79a",
+      "trackUri": "spotify:track:64DxuGvJFacscdFCYzhjbI",
+      "title": "Fogo Terra e Ar Interestelar - Batidão",
+      "artists": [
+        "GS O Rei do Beat"
+      ],
+      "album": "Fogo Terra e Ar Interestelar (Batidão)",
+      "durationMs": 95408,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02f7973564421253a452cb8264",
+      "explicit": false,
+      "bpm": 130.003,
+      "key": "F#",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-09-04T16:46:42Z"
+    },
+    {
+      "position": 17,
+      "itemUid": "6e4b1b067461b2ca5d8a",
+      "trackUri": "spotify:track:3dr1vGF68LLJVH8TZh0eoy",
+      "title": "Cowboy Maluco",
+      "artists": [
+        "JIRAYAUAI",
+        "Mc Rd",
+        "SAM SAM"
+      ],
+      "album": "Cowboy Maluco",
+      "durationMs": 110067,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e028be6edc47db038e8f76164cc",
+      "explicit": true,
+      "bpm": 130.00167846679688,
+      "key": "D",
+      "mode": "MODE_MAJOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-08-27T16:20:23Z"
+    },
+    {
+      "position": 18,
+      "itemUid": "effc9a45dd77a8f07d91",
+      "trackUri": "spotify:track:5YNGlqsKGstyaJilHELAGo",
+      "title": "A Dança - Ao Vivo",
+      "artists": [
+        "MC Hariel",
+        "Gilberto Gil"
+      ],
+      "album": "Funk Superação (Ao Vivo)",
+      "durationMs": 244931,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02bc7d1f30bc1a10d2b950e052",
+      "explicit": false,
+      "bpm": 72.9995,
+      "key": "C",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-08-19T11:38:22Z"
+    },
+    {
+      "position": 19,
+      "itemUid": "d5a8bd379a432cb92683",
+      "trackUri": "spotify:track:2plbrEY59IikOBgBGLjaoe",
+      "title": "Die With A Smile",
+      "artists": [
+        "Lady Gaga",
+        "Bruno Mars"
+      ],
+      "album": "Die With A Smile",
+      "durationMs": 251667,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e0282ea2e9e1858aa012c57cd45",
+      "explicit": false,
+      "bpm": 157.998,
+      "key": "A",
+      "mode": "MODE_MAJOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-08-17T02:06:11Z"
+    },
+    {
+      "position": 20,
+      "itemUid": "59148190933e9c0cf300",
+      "trackUri": "spotify:track:5YciOakY5dB5dULkiLdCaf",
+      "title": "Stop Crying Your Heart Out",
+      "artists": [
+        "Oasis"
+      ],
+      "album": "Heathen Chemistry",
+      "durationMs": 303133,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02f687135853a4488b2178d0bf",
+      "explicit": false,
+      "bpm": 75.6935,
+      "key": "D",
+      "mode": "MODE_MAJOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-08-11T02:02:49Z"
+    },
+    {
+      "position": 21,
+      "itemUid": "18cc29cf5df032ec1fb4",
+      "trackUri": "spotify:track:0ElpbbncWT9aS7mgoqEHbQ",
+      "title": "Where's My Love - Acoustic",
+      "artists": [
+        "SYML"
+      ],
+      "album": "Where's My Love",
+      "durationMs": 239880,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02dd4190a3114d1f2bde3c74f8",
+      "explicit": false,
+      "bpm": 104.149,
+      "key": "C",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-08-05T19:31:43Z"
+    },
+    {
+      "position": 22,
+      "itemUid": "f11b7455c659ada0d6a4",
+      "trackUri": "spotify:track:2VlLbhGLVJgdOW7kKdWWFc",
+      "title": "Six Feet Under",
+      "artists": [
+        "Billie Eilish"
+      ],
+      "album": "Six Feet Under",
+      "durationMs": 189613,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02fae80fc6c7f60e75cfc519c7",
+      "explicit": false,
+      "bpm": 67.4984,
+      "key": "D",
+      "mode": "MODE_MAJOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-08-05T19:31:41Z"
+    },
+    {
+      "position": 23,
+      "itemUid": "7ca90408c0fbbf1ac378",
+      "trackUri": "spotify:track:5OGZ2Mx4Cs6RCndDRycGBJ",
+      "title": "Daylight",
+      "artists": [
+        "David Kushner"
+      ],
+      "album": "The Dichotomy",
+      "durationMs": 212953,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02d010d5f2882bad368ee24403",
+      "explicit": false,
+      "bpm": 64.88170623779297,
+      "key": "A",
+      "mode": "MODE_MINOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-08-05T19:31:38Z"
+    },
+    {
+      "position": 24,
+      "itemUid": "a956c0ef643239de6b39",
+      "trackUri": "spotify:track:5yJaXWIErrrsjQ3J0eR5aK",
+      "title": "The Night We Met",
+      "artists": [
+        "Lord Huron"
+      ],
+      "album": "Strange Trails",
+      "durationMs": 208226,
+      "coverUrl": "https://i.scdn.co/image/ab67616d00001e02b4916183f769aca218acb85f",
+      "explicit": false,
+      "bpm": 172.666,
+      "key": "A",
+      "mode": "MODE_MAJOR",
+      "playableInSpotify": true,
+      "addedAt": "2026-07-27T23:10:57Z"
+    }
+  ]
+}

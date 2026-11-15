@@ -1,0 +1,34 @@
+# Music Core — V1 (biblioteca independente)
+
+Player web/PWA para arquivos de áudio próprios ou devidamente autorizados. Não se conecta ao streaming do Spotify, não copia arquivos do catálogo e não contorna DRM.
+
+## Funcionalidades
+
+- Importar MP3, WAV, OGG, AAC, FLAC etc. (quando o navegador suporta), incluindo arrastar e soltar.
+- Guardar arquivos em IndexedDB no próprio navegador; reprodução com `HTMLAudioElement`.
+- Biblioteca, busca, músicas favoritas, playlists locais, fila, avanço, retorno, modo aleatório e repetição.
+- Reproduzir áudio demonstrativo criado exclusivamente para este pacote.
+- Importar, como **metadados apenas**, um arquivo JSON com `data.playlistV2.content.items`; cria uma playlist local que preserva ordem e UIDs de cada ocorrência, além de total, limite, offset e revisão da página.
+- Instalação como PWA em navegadores compatíveis via HTTPS ou localhost.
+
+## Rodar localmente
+
+Abra a pasta em um terminal e execute `python -m http.server 8000`. Em seguida, acesse `http://localhost:8000`. Também pode publicar **todo o conteúdo** desta pasta em um repositório GitHub Pages; o `index.html` deve ficar na raiz publicada.
+
+Na primeira visita, o aplicativo adiciona uma faixa de demonstração para validar o player. Use `＋ Importar músicas` para escolher seus arquivos; em Início ou Biblioteca, use `Importar metadados JSON` para visualizar uma exportação JSON de playlist sem importar arquivos de áudio de terceiros.
+
+## Limitações desta primeira versão
+
+- Dados estão apenas no navegador atual. Desinstalar, limpar o site, usar outro dispositivo ou um navegador em modo anônimo pode eliminar músicas e playlists. Faça backup dos arquivos originais.
+- O JSON externo só fornece dados de catálogo, não links de música. Um campo `playable` verdadeiro no serviço de origem **não** significa que a faixa possa tocar aqui.
+- Nenhuma integração com Supabase, sincronização de conta ou colaboradores reais nesta versão.
+- A importação do formato `playlistV2` é um adaptador para estudo de dados fornecidos manualmente; o formato externo pode mudar.
+- O volume de arquivos armazenáveis depende da cota do navegador. Em produção, usar storage com autenticação, autorização e políticas RLS.
+- Antes de redistribuir imagens/capas, verificar os direitos e termos da fonte.
+
+## Estrutura
+
+- `index.html`, `styles.css`, `app.js`: interface e lógica
+- `sw.js`, `manifest.webmanifest`, `assets/icon-*.png`: instalação e cache offline da casca do app
+- `assets/demo-original.wav`: sinal de teste original
+- `examples/playlist-metadata-normalized.json`: catálogo extraído de forma seletiva da amostra do usuário; **não** contém URLs de áudio, usuários ou links de compartilhamento
